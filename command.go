@@ -24,7 +24,7 @@ import (
 	"sort"
 	"strings"
 
-	flag "github.com/spf13/pflag"
+	flag "github.com/tj/pflag"
 )
 
 // Command is just that, a command for your application.
@@ -266,7 +266,8 @@ func (c *Command) UsageTemplate() string {
 	if c.HasParent() {
 		return c.parent.UsageTemplate()
 	}
-	return `  Usage:{{if .Runnable}}
+	return `
+  Usage:{{if .Runnable}}
     {{if .HasAvailableFlags}}{{appendIfNotPresent .UseLine "[flags]"}}{{else}}{{.UseLine}}{{end}}{{end}}{{if .HasAvailableSubCommands}}
     {{ .CommandPath}} [command]{{end}}{{if gt .Aliases 0}}
 
@@ -281,10 +282,10 @@ func (c *Command) UsageTemplate() string {
     {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableLocalFlags}}
 
   Flags:
-  {{.LocalFlags.FlagUsages | trimRightSpace}}{{end}}{{ if .HasAvailableInheritedFlags}}
+{{.LocalFlags.FlagUsages | trimRightSpace}}{{end}}{{ if .HasAvailableInheritedFlags}}
 
   Global Flags:
-  {{.InheritedFlags.FlagUsages | trimRightSpace}}{{end}}{{if .HasHelpSubCommands}}
+{{.InheritedFlags.FlagUsages | trimRightSpace}}{{end}}{{if .HasHelpSubCommands}}
 
   Additional help topics:{{range .Commands}}{{if .IsHelpCommand}}
     {{rpad .CommandPath .CommandPathPadding}} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableSubCommands }}
@@ -302,8 +303,8 @@ func (c *Command) HelpTemplate() string {
 	if c.HasParent() {
 		return c.parent.HelpTemplate()
 	}
-	return `  {{with or .Long .Short }}{{. | trim}}
-
+	return `
+  {{with or .Long .Short }}{{. | trim}}
 {{end}}{{if or .Runnable .HasSubCommands}}{{.UsageString}}{{end}}`
 }
 
@@ -507,7 +508,7 @@ func (c *Command) Root() *Command {
 // ArgsLenAtDash will return the length of f.Args at the moment when a -- was
 // found during arg parsing. This allows your program to know which args were
 // before the -- and which came after. (Description from
-// https://godoc.org/github.com/spf13/pflag#FlagSet.ArgsLenAtDash).
+// https://godoc.org/github.com/tj/pflag#FlagSet.ArgsLenAtDash).
 func (c *Command) ArgsLenAtDash() int {
 	return c.Flags().ArgsLenAtDash()
 }

@@ -10,7 +10,7 @@ import (
 	"testing"
 	"text/template"
 
-	"github.com/spf13/pflag"
+	"github.com/tj/pflag"
 )
 
 var _ = fmt.Println
