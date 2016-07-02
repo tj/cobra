@@ -266,30 +266,31 @@ func (c *Command) UsageTemplate() string {
 	if c.HasParent() {
 		return c.parent.UsageTemplate()
 	}
-	return `Usage:{{if .Runnable}}
-  {{if .HasAvailableFlags}}{{appendIfNotPresent .UseLine "[flags]"}}{{else}}{{.UseLine}}{{end}}{{end}}{{if .HasAvailableSubCommands}}
-  {{ .CommandPath}} [command]{{end}}{{if gt .Aliases 0}}
+	return `  Usage:{{if .Runnable}}
+    {{if .HasAvailableFlags}}{{appendIfNotPresent .UseLine "[flags]"}}{{else}}{{.UseLine}}{{end}}{{end}}{{if .HasAvailableSubCommands}}
+    {{ .CommandPath}} [command]{{end}}{{if gt .Aliases 0}}
 
-Aliases:
-  {{.NameAndAliases}}
-{{end}}{{if .HasExample}}
+  Aliases:
+    {{.NameAndAliases}}
+  {{end}}{{if .HasExample}}
 
-Examples:
-{{ .Example }}{{end}}{{ if .HasAvailableSubCommands}}
+  Examples:
+  {{ .Example }}{{end}}{{ if .HasAvailableSubCommands}}
 
-Available Commands:{{range .Commands}}{{if .IsAvailableCommand}}
-  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableLocalFlags}}
+  Available Commands:{{range .Commands}}{{if .IsAvailableCommand}}
+    {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableLocalFlags}}
 
-Flags:
-{{.LocalFlags.FlagUsages | trimRightSpace}}{{end}}{{ if .HasAvailableInheritedFlags}}
+  Flags:
+  {{.LocalFlags.FlagUsages | trimRightSpace}}{{end}}{{ if .HasAvailableInheritedFlags}}
 
-Global Flags:
-{{.InheritedFlags.FlagUsages | trimRightSpace}}{{end}}{{if .HasHelpSubCommands}}
+  Global Flags:
+  {{.InheritedFlags.FlagUsages | trimRightSpace}}{{end}}{{if .HasHelpSubCommands}}
 
-Additional help topics:{{range .Commands}}{{if .IsHelpCommand}}
-  {{rpad .CommandPath .CommandPathPadding}} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableSubCommands }}
+  Additional help topics:{{range .Commands}}{{if .IsHelpCommand}}
+    {{rpad .CommandPath .CommandPathPadding}} {{.Short}}{{end}}{{end}}{{end}}{{ if .HasAvailableSubCommands }}
 
-Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}
+  Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}
+
 `
 }
 
@@ -301,7 +302,7 @@ func (c *Command) HelpTemplate() string {
 	if c.HasParent() {
 		return c.parent.HelpTemplate()
 	}
-	return `{{with or .Long .Short }}{{. | trim}}
+	return `  {{with or .Long .Short }}{{. | trim}}
 
 {{end}}{{if or .Runnable .HasSubCommands}}{{.UsageString}}{{end}}`
 }
@@ -734,7 +735,7 @@ func (c commandSorterByName) Less(i, j int) bool { return c[i].Name() < c[j].Nam
 // Commands returns a sorted slice of child commands.
 func (c *Command) Commands() []*Command {
 	// do not sort commands if it already sorted or sorting was disabled
-	if EnableCommandSorting && !c.commandsAreSorted{
+	if EnableCommandSorting && !c.commandsAreSorted {
 		sort.Sort(commandSorterByName(c.commands))
 		c.commandsAreSorted = true
 	}
